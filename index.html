@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TH-DAT | Trimester-Aware Antenatal Depression Screening</title>
+    <meta name="description" content="TH-DAT: Trimester-Aware Hierarchical Domain-Attention Transformer for Antenatal Depression Prediction. AI-powered depression screening for pregnant women.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <svg width="64" height="64" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="url(#splash-grad)" stroke-width="2.5" class="splash-circle"/>
+                    <path d="M10 16 C10 12, 16 8, 16 16 C16 8, 22 12, 22 16 C22 22, 16 26, 16 26 C16 26, 10 22, 10 16Z" fill="url(#splash-grad)" opacity="0.9" class="splash-heart"/>
+                    <defs><linearGradient id="splash-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+                </svg>
+            </div>
+            <h2 class="splash-title">TH-DAT</h2>
+            <p class="splash-sub">Loading Screening System...</p>
+            <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+        </div>
+    </div>
+
+    <!-- Cursor Glow Trail -->
+    <div id="cursor-glow" class="cursor-glow"></div>
+
+    <!-- Animated Background Particles -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Cinematic Floating Orbs -->
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popup-modal" class="popup-overlay">
+        <div class="popup-card">
+            <button class="popup-close" id="popup-close">&times;</button>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="14" stroke="url(#logo-grad)" stroke-width="2.5"/>
+                        <path d="M10 16 C10 12, 16 8, 16 16 C16 8, 22 12, 22 16 C22 22, 16 26, 16 26 C16 26, 10 22, 10 16Z" fill="url(#logo-grad)" opacity="0.9"/>
+                        <defs>
+                            <linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32">
+                                <stop stop-color="#a78bfa"/>
+                                <stop offset="1" stop-color="#ec4899"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">TH-DAT</span>
+            </a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#screening" class="nav-link">Screening</a>
+
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#results" class="nav-link">Results</a>
+                <a href="#team" class="nav-link">Team</a>
+            </div>
+            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="#hero" class="mobile-link">Home</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#screening" class="mobile-link">Screening</a>
+        <a href="#architecture" class="mobile-link">Architecture</a>
+        <a href="#results" class="mobile-link">Results</a>
+        <a href="#team" class="mobile-link">Team</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Created by Saivenkat H · VIT-AP University
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Trimester-Aware</span>
+                <span class="title-line gradient-text">Depression Screening</span>
+                <span class="title-line">for Expectant Mothers</span>
+            </h1>
+            <p class="hero-creator">Designed & Developed by <strong>Saivenkat H</strong></p>
+            <p class="hero-subtitle">
+                TH-DAT leverages domain-attention transformers with trimester conditioning to predict antenatal depression with <strong>94.40% AUC-ROC</strong> accuracy — empowering early intervention for maternal mental health.
+            </p>
+            <div class="hero-actions">
+                <a href="#screening" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Start Screening
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Learn More
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-value" data-count="94.40">0</span>
+                    <span class="stat-unit">%</span>
+                    <span class="stat-label">AUC-ROC</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value" data-count="28333">0</span>
+                    <span class="stat-unit"></span>
+                    <span class="stat-label">Patient Records</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value" data-count="12">0</span>
+                    <span class="stat-unit"></span>
+                    <span class="stat-label">Models Compared</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value" data-count="2">0</span>
+                    <span class="stat-unit"></span>
+                    <span class="stat-label">Cohort Datasets</span>
+                </div>
+            </div>
+        </div>
+        <!-- Cinematic Light Streaks -->
+        <div class="light-streaks">
+            <div class="streak streak-1"></div>
+            <div class="streak streak-2"></div>
+            <div class="streak streak-3"></div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Understanding the Challenge</span>
+                <h2 class="section-title">Why Antenatal Depression<br><span class="gradient-text">Screening Matters</span></h2>
+                <p class="section-desc">Antenatal depression affects 10–20% of pregnant women worldwide, yet systematic screening remains inconsistent, especially in resource-constrained settings.</p>
+            </div>
+            <div class="challenge-grid">
+                <div class="challenge-card" data-aos="fade-up">
+                    <div class="challenge-icon" style="--accent: #a78bfa;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                    <h3>10–25% Prevalence</h3>
+                    <p>Up to 25% of pregnant women in LMICs experience clinically significant depressive symptoms during pregnancy.</p>
+                </div>
+                <div class="challenge-card" data-aos="fade-up" data-delay="100">
+                    <div class="challenge-icon" style="--accent: #ec4899;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    </div>
+                    <h3>3–5× Postnatal Risk</h3>
+                    <p>Untreated antenatal depression increases the probability of developing postnatal depression by 3 to 5 fold.</p>
+                </div>
+                <div class="challenge-card" data-aos="fade-up" data-delay="200">
+                    <div class="challenge-icon" style="--accent: #06b6d4;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM21 16c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
+                    </div>
+                    <h3>Adverse Outcomes</h3>
+                    <p>Preterm birth (OR 1.37), low birth weight (OR 1.28), and compromised maternal-infant bonding are linked to untreated AD.</p>
+                </div>
+                <div class="challenge-card" data-aos="fade-up" data-delay="300">
+                    <div class="challenge-icon" style="--accent: #f59e0b;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.674M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h3>Screening Gap</h3>
+                    <p>Routine screening is frequently omitted in resource-constrained settings due to workforce limitations and lack of infrastructure.</p>
+                </div>
+            </div>
+
+            <!-- Research Challenges -->
+            <div class="research-challenges">
+                <h3 class="subsection-title">Research Challenges Addressed</h3>
+                <div class="challenges-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="--color: #a78bfa;">C1</div>
+                        <div class="timeline-content">
+                            <h4>Domain Structure Ignorance</h4>
+                            <p>Existing ML models treat clinical features as flat, exchangeable input vectors, discarding intra-domain correlations.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="--color: #ec4899;">C2</div>
+                        <div class="timeline-content">
+                            <h4>Temporal Insensitivity</h4>
+                            <p>No widely adopted model explicitly captures trimester-specific depression risk evolution during pregnancy.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="--color: #06b6d4;">C3</div>
+                        <div class="timeline-content">
+                            <h4>Class Imbalance</h4>
+                            <p>Models with standard cross-entropy loss systematically miss depressed patients — the ones needing clinical attention.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="--color: #f59e0b;">C4</div>
+                        <div class="timeline-content">
+                            <h4>Interpretability Deficit</h4>
+                            <p>Clinical adoption requires transparent, actionable predictions — not opaque probability scores.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="--color: #10b981;">C5</div>
+                        <div class="timeline-content">
+                            <h4>Cross-Cohort Robustness Gap</h4>
+                            <p>Models developed on single datasets may not transfer reliably across diverse cultural and healthcare contexts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screening Section -->
+    <section id="screening" class="section screening-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Interactive Tool</span>
+                <h2 class="section-title">Antenatal Depression<br><span class="gradient-text">Screening Assessment</span></h2>
+                <p class="section-desc">Enter patient clinical parameters across the three domains. The system calculates a depression risk score using trimester-aware weighting inspired by the TH-DAT model.</p>
+            </div>
+
+            <div class="screening-wrapper">
+                <!-- Progress Bar -->
+                <div class="form-progress">
+                    <div class="progress-track">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <span>Demographic</span>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <span>Obstetric</span>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <span>Psychosocial</span>
+                        </div>
+                        <div class="progress-step" data-step="4">
+                            <div class="step-circle">4</div>
+                            <span>Results</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="screening-form" class="screening-form">
+                    <!-- Step 1: Demographic Domain -->
+                    <div id="step-1" class="form-step active">
+                        <div class="step-header">
+                            <div class="domain-badge demographic">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                Demographic Domain
+                            </div>
+                            <p class="step-desc">Basic demographic information of the patient.</p>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age">Age (years)</label>
+                                <input type="number" id="age" name="age" min="14" max="50" placeholder="e.g., 28" required>
+                                <span class="form-hint">Typical range: 18–45</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="female_education">Female Education Level</label>
+                                <select id="female_education" name="female_education" required>
+                                    <option value="">Select level</option>
+                                    <option value="0">No formal education</option>
+                                    <option value="1">Primary (1–5 years)</option>
+                                    <option value="2">Secondary (6–10 years)</option>
+                                    <option value="3">Higher secondary (11–12 years)</option>
+                                    <option value="4">Graduate / Post-graduate</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="husband_education">Husband Education Level</label>
+                                <select id="husband_education" name="husband_education" required>
+                                    <option value="">Select level</option>
+                                    <option value="0">No formal education</option>
+                                    <option value="1">Primary (1–5 years)</option>
+                                    <option value="2">Secondary (6–10 years)</option>
+                                    <option value="3">Higher secondary (11–12 years)</option>
+                                    <option value="4">Graduate / Post-graduate</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="working_status">Working Status</label>
+                                <select id="working_status" name="working_status" required>
+                                    <option value="">Select status</option>
+                                    <option value="1">Employed</option>
+                                    <option value="0">Unemployed / Homemaker</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sufficient_money">Sufficient Money for Needs</label>
+                                <select id="sufficient_money" name="sufficient_money" required>
+                                    <option value="">Select</option>
+                                    <option value="3">Always sufficient</option>
+                                    <option value="2">Mostly sufficient</option>
+                                    <option value="1">Sometimes insufficient</option>
+                                    <option value="0">Always insufficient</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="family_system">Family System</label>
+                                <select id="family_system" name="family_system" required>
+                                    <option value="">Select type</option>
+                                    <option value="1">Nuclear family</option>
+                                    <option value="0">Joint / Extended family</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div></div>
+                            <button type="button" class="btn btn-primary btn-next" data-next="2">
+                                Next: Obstetric
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Obstetric Domain -->
+                    <div id="step-2" class="form-step">
+                        <div class="step-header">
+                            <div class="domain-badge obstetric">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Obstetric Domain
+                            </div>
+                            <p class="step-desc">Pregnancy and obstetric history details.</p>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="gestational_age">Gestational Age (weeks)</label>
+                                <input type="number" id="gestational_age" name="gestational_age" min="1" max="42" step="0.5" placeholder="e.g., 24" required>
+                                <div id="trimester-indicator" class="trimester-indicator">
+                                    <span class="tri-label">Auto-detected Trimester:</span>
+                                    <span id="trimester-value" class="tri-value">Enter gestational age</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_sons">Number of Sons</label>
+                                <input type="number" id="num_sons" name="num_sons" min="0" max="15" placeholder="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_daughters">Number of Daughters</label>
+                                <input type="number" id="num_daughters" name="num_daughters" min="0" max="15" placeholder="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gravida">Gravida (Total Pregnancies)</label>
+                                <input type="number" id="gravida" name="gravida" min="1" max="20" placeholder="e.g., 2" required>
+                                <span class="form-hint">Including current pregnancy</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="miscarriage">Previous Miscarriage</label>
+                                <select id="miscarriage" name="miscarriage" required>
+                                    <option value="">Select</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender_preference">Gender Preference for Baby</label>
+                                <select id="gender_preference" name="gender_preference" required>
+                                    <option value="">Select</option>
+                                    <option value="2">Strong preference (boy)</option>
+                                    <option value="1">Mild preference</option>
+                                    <option value="0">No preference</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-ghost btn-prev" data-prev="1">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary btn-next" data-next="3">
+                                Next: Psychosocial
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Psychosocial Domain -->
+                    <div id="step-3" class="form-step">
+                        <div class="step-header">
+                            <div class="domain-badge psychosocial">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                Psychosocial Domain
+                            </div>
+                            <p class="step-desc">Mental health, self-perception, and social support indicators.</p>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="physical_health">Physical Health Perception</label>
+                                <select id="physical_health" name="physical_health" required>
+                                    <option value="">Select</option>
+                                    <option value="4">Excellent</option>
+                                    <option value="3">Good</option>
+                                    <option value="2">Fair</option>
+                                    <option value="1">Poor</option>
+                                    <option value="0">Very poor</option>
+                                </select>
+                                <span class="form-hint">Self-reported physical wellbeing</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="appearance_acceptance">Appearance Acceptance</label>
+                                <select id="appearance_acceptance" name="appearance_acceptance" required>
+                                    <option value="">Select</option>
+                                    <option value="4">Very satisfied</option>
+                                    <option value="3">Satisfied</option>
+                                    <option value="2">Neutral</option>
+                                    <option value="1">Dissatisfied</option>
+                                    <option value="0">Very dissatisfied</option>
+                                </select>
+                                <span class="form-hint">Body image satisfaction during pregnancy</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="mil_relationship">Mother-in-Law Relationship</label>
+                                <select id="mil_relationship" name="mil_relationship" required>
+                                    <option value="">Select</option>
+                                    <option value="4">Excellent / Very supportive</option>
+                                    <option value="3">Good</option>
+                                    <option value="2">Neutral</option>
+                                    <option value="1">Strained</option>
+                                    <option value="0">Very difficult / Hostile</option>
+                                </select>
+                                <span class="form-hint">Quality of family support relationship</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-ghost btn-prev" data-prev="2">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="calculate-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                Calculate Risk Score
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Results -->
+                    <div id="step-4" class="form-step">
+                        <div id="results-container" class="results-container">
+                            <!-- Results populated by JS -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section architecture-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Model Architecture</span>
+                <h2 class="section-title">TH-DAT<br><span class="gradient-text">Architecture Pipeline</span></h2>
+                <p class="section-desc">Five hierarchical, progressively abstracting components with ~1.69M trainable parameters.</p>
+            </div>
+
+            <div class="arch-pipeline">
+                <div class="arch-card" data-component="C1">
+                    <div class="arch-number">C1</div>
+                    <div class="arch-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    </div>
+                    <h3>Domain-Grouped Feature Tokenizer</h3>
+                    <p>Each scalar feature is projected into 128-dim space via feature-specific linear transformations, augmented with positional + domain embeddings.</p>
+                    <div class="arch-detail">
+                        <span class="detail-chip">d=128</span>
+                        <span class="detail-chip">N=19 features</span>
+                        <span class="detail-chip">3 domains</span>
+                    </div>
+                </div>
+                <div class="arch-connector">
+                    <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h40" stroke="url(#conn-grad)" stroke-width="2" stroke-dasharray="4 4"><animate attributeName="stroke-dashoffset" values="0;-8" dur="1s" repeatCount="indefinite"/></path><polygon points="36,6 40,12 36,18" fill="#a78bfa"/><defs><linearGradient id="conn-grad"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>
+                </div>
+                <div class="arch-card" data-component="C2">
+                    <div class="arch-number">C2</div>
+                    <div class="arch-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                    </div>
+                    <h3>Global Transformer Encoder</h3>
+                    <p>6-layer, 8-head transformer with trimester conditioning (α=0.1) enabling intra- and cross-domain feature interactions.</p>
+                    <div class="arch-detail">
+                        <span class="detail-chip">L=6 layers</span>
+                        <span class="detail-chip">H=8 heads</span>
+                        <span class="detail-chip">d_ff=512</span>
+                    </div>
+                </div>
+                <div class="arch-connector">
+                    <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h40" stroke="url(#conn-grad)" stroke-width="2" stroke-dasharray="4 4"><animate attributeName="stroke-dashoffset" values="0;-8" dur="1s" repeatCount="indefinite"/></path><polygon points="36,6 40,12 36,18" fill="#a78bfa"/></svg>
+                </div>
+                <div class="arch-card" data-component="C3">
+                    <div class="arch-number">C3</div>
+                    <div class="arch-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h18v4H3zM3 10h18v4H3zM3 16h18v4H3z"/></svg>
+                    </div>
+                    <h3>Domain-Aware Attention Pooling</h3>
+                    <p>3 learnable query vectors attend over domain-specific tokens to produce domain summary matrix S ∈ ℝ<sup>3×d</sup>.</p>
+                    <div class="arch-detail">
+                        <span class="detail-chip demographic-chip">Demo</span>
+                        <span class="detail-chip obstetric-chip">Obst</span>
+                        <span class="detail-chip psychosocial-chip">Psych</span>
+                    </div>
+                </div>
+                <div class="arch-connector">
+                    <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h40" stroke="url(#conn-grad)" stroke-width="2" stroke-dasharray="4 4"><animate attributeName="stroke-dashoffset" values="0;-8" dur="1s" repeatCount="indefinite"/></path><polygon points="36,6 40,12 36,18" fill="#a78bfa"/></svg>
+                </div>
+                <div class="arch-card" data-component="C4">
+                    <div class="arch-number">C4</div>
+                    <div class="arch-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3>Trimester Cross-Attention</h3>
+                    <p>Trimester embedding queries domain summaries — learning trimester-specific attention patterns over clinical domains.</p>
+                    <div class="arch-detail">
+                        <span class="detail-chip t1-chip">T1: ≤13w</span>
+                        <span class="detail-chip t2-chip">T2: 14–26w</span>
+                        <span class="detail-chip t3-chip">T3: ≥27w</span>
+                    </div>
+                </div>
+                <div class="arch-connector">
+                    <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h40" stroke="url(#conn-grad)" stroke-width="2" stroke-dasharray="4 4"><animate attributeName="stroke-dashoffset" values="0;-8" dur="1s" repeatCount="indefinite"/></path><polygon points="36,6 40,12 36,18" fill="#a78bfa"/></svg>
+                </div>
+                <div class="arch-card" data-component="C5">
+                    <div class="arch-number">C5</div>
+                    <div class="arch-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                    <h3>Gated Domain Fusion</h3>
+                    <p>Per-patient softmax gate weights with entropy regularization — interpretable domain contributions summing to 1.</p>
+                    <div class="arch-detail">
+                        <span class="detail-chip">g = softmax(MLP)</span>
+                        <span class="detail-chip">Σgₖ = 1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Strategy -->
+            <div class="training-strategy">
+                <h3 class="subsection-title">Two-Phase Training Strategy</h3>
+                <div class="training-phases">
+                    <div class="phase-card phase-1">
+                        <div class="phase-header">
+                            <span class="phase-number">Phase 1</span>
+                            <h4>Self-Supervised Masked Pretraining</h4>
+                        </div>
+                        <ul class="phase-details">
+                            <li>80 epochs of masked feature reconstruction</li>
+                            <li>Random 20% feature masking → MSE reconstruction</li>
+                            <li>Learns inter-feature statistical dependencies</li>
+                            <li>No depression labels used in this phase</li>
+                        </ul>
+                    </div>
+                    <div class="phase-arrow">
+                        <svg width="48" height="48" viewBox="0 0 48 48"><path d="M12 24h24" stroke="#a78bfa" stroke-width="2"/><polygon points="32,18 40,24 32,30" fill="#a78bfa"/></svg>
+                    </div>
+                    <div class="phase-card phase-2">
+                        <div class="phase-header">
+                            <span class="phase-number">Phase 2</span>
+                            <h4>Supervised Fine-tuning</h4>
+                        </div>
+                        <ul class="phase-details">
+                            <li>300 epochs with focal + contrastive + entropy loss</li>
+                            <li>AdamW optimizer (lr=5e-4)</li>
+                            <li>MixUp augmentation (α=0.2, 50% prob)</li>
+                            <li>SWA after epoch 200, gradient clipping at 1.0</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loss Function -->
+            <div class="loss-function-card">
+                <h3>Composite Loss Function</h3>
+                <div class="formula">
+                    <span class="formula-text">L<sub>total</sub> = L<sub>focal</sub> + 0.03 · L<sub>contrastive</sub> + 0.01 · L<sub>entropy</sub></span>
+                </div>
+                <div class="loss-components">
+                    <div class="loss-item">
+                        <span class="loss-name">Focal Loss</span>
+                        <span class="loss-desc">γ=2.0, focuses on hard boundary cases</span>
+                    </div>
+                    <div class="loss-item">
+                        <span class="loss-name">Contrastive Loss</span>
+                        <span class="loss-desc">τ=0.1, pulls same-class representations together</span>
+                    </div>
+                    <div class="loss-item">
+                        <span class="loss-name">Entropy Reg.</span>
+                        <span class="loss-desc">Prevents domain mode collapse</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="section results-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Performance</span>
+                <h2 class="section-title">Model Performance<br><span class="gradient-text">& Comparison</span></h2>
+                <p class="section-desc">Comprehensive evaluation across 12 models, 2 international datasets, and 28,333 patient records.</p>
+            </div>
+
+            <!-- Performance Tabs -->
+            <div class="perf-tabs">
+                <button class="perf-tab active" data-tab="comparison">Model Comparison</button>
+                <button class="perf-tab" data-tab="trimester">Trimester Analysis</button>
+                <button class="perf-tab" data-tab="ablation">Ablation Study</button>
+                <button class="perf-tab" data-tab="cross-cohort">Cross-Cohort</button>
+            </div>
+
+            <!-- Model Comparison -->
+            <div id="tab-comparison" class="perf-panel active">
+                <div class="chart-container">
+                    <canvas id="model-comparison-chart"></canvas>
+                </div>
+                <div class="perf-table-wrapper">
+                    <table class="perf-table" id="model-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Model</th>
+                                <th>Accuracy</th>
+                                <th>F1</th>
+                                <th>AUC-ROC</th>
+                                <th>95% CI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><span class="rank-badge rank-1">1</span></td>
+                                <td><strong>TH-DAT (Ours)</strong></td>
+                                <td>0.9020</td>
+                                <td>0.9248</td>
+                                <td><span class="metric-highlight">0.9440</span></td>
+                                <td>0.9342–0.9538</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-2">2</span></td>
+                                <td>Random Forest</td>
+                                <td>0.8706</td>
+                                <td>0.8992</td>
+                                <td>0.9369</td>
+                                <td>0.9258–0.9469</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-3">3</span></td>
+                                <td>TabTransformer</td>
+                                <td>0.8468</td>
+                                <td>0.8846</td>
+                                <td>0.8971</td>
+                                <td>0.8838–0.9100</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">4</span></td>
+                                <td>XGBoost</td>
+                                <td>0.7812</td>
+                                <td>0.8343</td>
+                                <td>0.8529</td>
+                                <td>0.8370–0.8683</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">5</span></td>
+                                <td>SAINT</td>
+                                <td>0.7293</td>
+                                <td>0.7907</td>
+                                <td>0.7880</td>
+                                <td>0.7700–0.8056</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">6</span></td>
+                                <td>FT-Transformer</td>
+                                <td>0.7103</td>
+                                <td>0.7637</td>
+                                <td>0.7797</td>
+                                <td>0.7615–0.7975</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">7</span></td>
+                                <td>ANN</td>
+                                <td>0.7060</td>
+                                <td>0.7532</td>
+                                <td>0.7786</td>
+                                <td>0.7602–0.7966</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">8</span></td>
+                                <td>Autoencoder</td>
+                                <td>0.7103</td>
+                                <td>0.7549</td>
+                                <td>0.7761</td>
+                                <td>0.7578–0.7940</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">9</span></td>
+                                <td>GPT-2</td>
+                                <td>0.6342</td>
+                                <td>0.6940</td>
+                                <td>0.6797</td>
+                                <td>0.6599–0.6991</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">10</span></td>
+                                <td>BERT</td>
+                                <td>0.5899</td>
+                                <td>0.6031</td>
+                                <td>0.6760</td>
+                                <td>0.6560–0.6956</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">11</span></td>
+                                <td>RoBERTa</td>
+                                <td>0.5852</td>
+                                <td>0.6311</td>
+                                <td>0.6469</td>
+                                <td>0.6264–0.6670</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">12</span></td>
+                                <td>T5</td>
+                                <td>0.5514</td>
+                                <td>0.6226</td>
+                                <td>0.5631</td>
+                                <td>0.5418–0.5842</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Trimester Analysis -->
+            <div id="tab-trimester" class="perf-panel">
+                <div class="trimester-cards">
+                    <div class="tri-card tri-1">
+                        <div class="tri-header">
+                            <span class="tri-icon">T1</span>
+                            <span class="tri-weeks">≤13 weeks</span>
+                        </div>
+                        <div class="tri-metrics">
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9685</span>
+                                <span class="tri-metric-label">AUC-ROC</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9180</span>
+                                <span class="tri-metric-label">F1</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9120</span>
+                                <span class="tri-metric-label">Sensitivity</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9250</span>
+                                <span class="tri-metric-label">Specificity</span>
+                            </div>
+                        </div>
+                        <div class="tri-bar">
+                            <div class="tri-bar-fill" style="width: 96.85%;"></div>
+                        </div>
+                        <span class="tri-n">N = 673</span>
+                    </div>
+                    <div class="tri-card tri-2">
+                        <div class="tri-header">
+                            <span class="tri-icon">T2</span>
+                            <span class="tri-weeks">14–26 weeks</span>
+                        </div>
+                        <div class="tri-metrics">
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9743</span>
+                                <span class="tri-metric-label">AUC-ROC</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9290</span>
+                                <span class="tri-metric-label">F1</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9230</span>
+                                <span class="tri-metric-label">Sensitivity</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9350</span>
+                                <span class="tri-metric-label">Specificity</span>
+                            </div>
+                        </div>
+                        <div class="tri-bar">
+                            <div class="tri-bar-fill" style="width: 97.43%;"></div>
+                        </div>
+                        <span class="tri-n">N = 589</span>
+                    </div>
+                    <div class="tri-card tri-3">
+                        <div class="tri-header">
+                            <span class="tri-icon">T3</span>
+                            <span class="tri-weeks">≥27 weeks</span>
+                        </div>
+                        <div class="tri-metrics">
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9812</span>
+                                <span class="tri-metric-label">AUC-ROC</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9410</span>
+                                <span class="tri-metric-label">F1</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9380</span>
+                                <span class="tri-metric-label">Sensitivity</span>
+                            </div>
+                            <div class="tri-metric">
+                                <span class="tri-metric-val">0.9440</span>
+                                <span class="tri-metric-label">Specificity</span>
+                            </div>
+                        </div>
+                        <div class="tri-bar">
+                            <div class="tri-bar-fill" style="width: 98.12%;"></div>
+                        </div>
+                        <span class="tri-n">N = 840</span>
+                    </div>
+                </div>
+                <div class="trimester-insight">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <p>TH-DAT shows a modest performance gradient across trimesters, with highest AUC in the third trimester (0.9812) and lowest in the first (0.9685). Performance remains high across all trimesters (minimum AUC &gt; 0.93).</p>
+                </div>
+            </div>
+
+            <!-- Ablation Study -->
+            <div id="tab-ablation" class="perf-panel">
+                <div class="chart-container">
+                    <canvas id="ablation-chart"></canvas>
+                </div>
+                <div class="perf-table-wrapper">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>Configuration</th>
+                                <th>Acc.</th>
+                                <th>F1</th>
+                                <th>AUC-ROC</th>
+                                <th>ΔAUC</th>
+                                <th>MCC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><strong>Full TH-DAT</strong></td>
+                                <td>0.9020</td>
+                                <td>0.9248</td>
+                                <td><span class="metric-highlight">0.9440</span></td>
+                                <td>—</td>
+                                <td>0.784</td>
+                            </tr>
+                            <tr>
+                                <td>w/o Skip Connection</td>
+                                <td>0.8854</td>
+                                <td>0.9108</td>
+                                <td>0.9244</td>
+                                <td class="negative">-0.0196</td>
+                                <td>0.746</td>
+                            </tr>
+                            <tr>
+                                <td>w/o Trimester Attention</td>
+                                <td>0.8906</td>
+                                <td>0.9157</td>
+                                <td>0.9293</td>
+                                <td class="negative">-0.0147</td>
+                                <td>0.757</td>
+                            </tr>
+                            <tr>
+                                <td>w/o Pretraining</td>
+                                <td>0.8834</td>
+                                <td>0.9106</td>
+                                <td>0.9294</td>
+                                <td class="negative">-0.0146</td>
+                                <td>0.741</td>
+                            </tr>
+                            <tr>
+                                <td>w/o Gated Fusion</td>
+                                <td>0.8987</td>
+                                <td>0.9225</td>
+                                <td>0.9380</td>
+                                <td class="negative">-0.0060</td>
+                                <td>0.774</td>
+                            </tr>
+                            <tr>
+                                <td>w/o Domain Grouping</td>
+                                <td>0.9025</td>
+                                <td>0.9252</td>
+                                <td>0.9401</td>
+                                <td class="negative">-0.0039</td>
+                                <td>0.781</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cross-Cohort -->
+            <div id="tab-cross-cohort" class="perf-panel">
+                <div class="cross-cohort-visual">
+                    <div class="cohort-card">
+                        <div class="cohort-flag">🇵🇰</div>
+                        <h4>PERI_DEP (Pakistan)</h4>
+                        <div class="cohort-stats">
+                            <div><span>N</span><strong>14,008</strong></div>
+                            <div><span>Features</span><strong>19</strong></div>
+                            <div><span>Prevalence</span><strong>64.8%</strong></div>
+                            <div><span>Instrument</span><strong>PHQ-9</strong></div>
+                        </div>
+                        <div class="cohort-auc">
+                            <span class="auc-label">AUC-ROC</span>
+                            <span class="auc-value">0.9440</span>
+                        </div>
+                    </div>
+                    <div class="cohort-arrow">
+                        <div class="arrow-line"></div>
+                        <span class="arrow-label">Cross-Cohort Transfer</span>
+                        <span class="arrow-delta">Δ = 0.041</span>
+                    </div>
+                    <div class="cohort-card">
+                        <div class="cohort-flag">🇺🇬</div>
+                        <h4>Uganda EPDS</h4>
+                        <div class="cohort-stats">
+                            <div><span>N</span><strong>14,325</strong></div>
+                            <div><span>Features</span><strong>13</strong></div>
+                            <div><span>Prevalence</span><strong>23.0%</strong></div>
+                            <div><span>Instrument</span><strong>EPDS</strong></div>
+                        </div>
+                        <div class="cohort-auc">
+                            <span class="auc-label">AUC-ROC</span>
+                            <span class="auc-value">0.9026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="perf-table-wrapper">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>PERI_DEP (Dev)</th>
+                                <th>Uganda (External)</th>
+                                <th>|Δ|</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><strong>TH-DAT (Ours)</strong></td>
+                                <td>0.9440</td>
+                                <td>0.9026</td>
+                                <td>0.041</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest</td>
+                                <td>0.9369</td>
+                                <td>0.9031</td>
+                                <td>0.034</td>
+                            </tr>
+                            <tr>
+                                <td>TabTransformer</td>
+                                <td>0.8971</td>
+                                <td>0.8999</td>
+                                <td>0.003</td>
+                            </tr>
+                            <tr>
+                                <td>XGBoost</td>
+                                <td>0.8529</td>
+                                <td>0.9031</td>
+                                <td>0.050</td>
+                            </tr>
+                            <tr>
+                                <td>ANN</td>
+                                <td>0.7786</td>
+                                <td>0.8945</td>
+                                <td>0.116</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Gate Weight Distribution -->
+            <div class="gate-weights-section">
+                <h3 class="subsection-title">Domain Gate Weight Distribution</h3>
+                <div class="gate-visual">
+                    <div class="gate-ring-container">
+                        <canvas id="gate-chart" width="280" height="280"></canvas>
+                    </div>
+                    <div class="gate-details">
+                        <div class="gate-item" style="--gate-color: #818cf8;">
+                            <div class="gate-bar-wrap">
+                                <div class="gate-bar" style="width: 31.6%;"></div>
+                            </div>
+                            <span class="gate-domain">Demographic</span>
+                            <span class="gate-pct">31.6% ±14.7%</span>
+                        </div>
+                        <div class="gate-item" style="--gate-color: #f97316;">
+                            <div class="gate-bar-wrap">
+                                <div class="gate-bar" style="width: 34.1%;"></div>
+                            </div>
+                            <span class="gate-domain">Obstetric</span>
+                            <span class="gate-pct">34.1% ±14.0%</span>
+                        </div>
+                        <div class="gate-item" style="--gate-color: #10b981;">
+                            <div class="gate-bar-wrap">
+                                <div class="gate-bar" style="width: 34.3%;"></div>
+                            </div>
+                            <span class="gate-domain">Psychosocial</span>
+                            <span class="gate-pct">34.3% ±14.0%</span>
+                        </div>
+                        <p class="gate-note">Population-level balance with substantial per-patient variation (5%–63%), demonstrating genuinely patient-specific domain contributions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section team-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Research Team</span>
+                <h2 class="section-title">Meet the<br><span class="gradient-text">Researchers</span></h2>
+                <p class="section-desc">School of Computer Science and Engineering, VIT-AP University, Amaravati, Andhra Pradesh, India</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card lead creator-card">
+                    <div class="creator-ribbon">★ Creator</div>
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder creator-avatar">SH</div>
+                    </div>
+                    <h4>Saivenkat H</h4>
+                    <span class="team-role">Creator · Lead Researcher & Developer</span>
+                    <p class="team-desc">Conceived and designed the entire study, created the TH-DAT architecture from scratch, implemented all 12 models and baselines, conducted all experiments, performed statistical analysis, and authored the manuscript.</p>
+                    <a href="mailto:hsaivenkat1@gmail.com" class="team-email">📧 hsaivenkat1@gmail.com</a>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar"><div class="avatar-placeholder">L</div></div>
+                    <h4>Lavanya</h4>
+                    <span class="team-role">Researcher</span>
+                    <p class="team-desc">Data preprocessing, baseline implementation, and result visualization.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar"><div class="avatar-placeholder">A</div></div>
+                    <h4>Adithya</h4>
+                    <span class="team-role">Researcher</span>
+                    <p class="team-desc">Data preprocessing, baseline implementation, and result visualization.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar"><div class="avatar-placeholder">S</div></div>
+                    <h4>Shapper</h4>
+                    <span class="team-role">Researcher</span>
+                    <p class="team-desc">Data preprocessing, baseline implementation, and result visualization.</p>
+                </div>
+                <div class="team-card guide">
+                    <div class="team-avatar"><div class="avatar-placeholder">BN</div></div>
+                    <h4>Dr. Beebi Naseeba</h4>
+                    <span class="team-role">Supervisor & Guide</span>
+                    <p class="team-desc">Clinical domain expertise, methodology review, and manuscript revision.</p>
+                </div>
+                <div class="team-card guide">
+                    <div class="team-avatar"><div class="avatar-placeholder">RM</div></div>
+                    <h4>Dr. Rishitha Muddana</h4>
+                    <span class="team-role">Supervisor & Guide</span>
+                    <p class="team-desc">Clinical domain expertise, methodology review, and manuscript revision.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                <circle cx="16" cy="16" r="14" stroke="url(#logo-grad-f)" stroke-width="2.5"/>
+                                <path d="M10 16 C10 12, 16 8, 16 16 C16 8, 22 12, 22 16 C22 22, 16 26, 16 26 C16 26, 10 22, 10 16Z" fill="url(#logo-grad-f)" opacity="0.9"/>
+                                <defs><linearGradient id="logo-grad-f" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <span class="logo-text">TH-DAT</span>
+                    </div>
+                    <p>Trimester-Aware Hierarchical Domain-Attention Transformer for Antenatal Depression Prediction.</p>
+                    <p class="footer-creator">Created by <strong>Saivenkat H</strong> · <a href="mailto:hsaivenkat1@gmail.com">hsaivenkat1@gmail.com</a></p>
+                </div>
+                <div class="footer-links-group">
+                    <h5>Navigation</h5>
+                    <a href="#hero">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#screening">Screening</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#results">Results</a>
+                </div>
+                <div class="footer-links-group">
+                    <h5>Resources</h5>
+                    <a href="https://github.com/testsaivenkat-maker/TH-DAT" target="_blank">GitHub Repository</a>
+                    <a href="https://doi.org/10.5281/zenodo.11094957" target="_blank">PERI_DEP Dataset</a>
+                    <a href="https://doi.org/10.17632/4swmy34scp.3" target="_blank">Uganda EPDS Dataset</a>
+                </div>
+                <div class="footer-links-group">
+                    <h5>Institution</h5>
+                    <p class="footer-inst">VIT-AP University<br>Amaravati, Andhra Pradesh<br>India</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TH-DAT Research | Created by <strong>Saivenkat H</strong> | VIT-AP University. For research purposes only.</p>
+                <p class="disclaimer">⚠️ This tool is for demonstration purposes only. It does not replace clinical assessment. The model should not be considered ready for clinical deployment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
