@@ -2527,3 +2527,370 @@ img { max-width: 100%; }
     opacity: 1;
     transform: translateY(0);
 }
+
+
+/* ============================================================
+   ENHANCED RESULTS — Patient Summary, Gate Weights, Print
+   ============================================================ */
+
+/* === Patient Summary Section === */
+.report-patient-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+    animation: fadeInUp 0.5s var(--ease-out) 0.1s both;
+}
+
+.report-patient-summary h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.patient-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.patient-info-chip {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.patient-info-chip:hover {
+    border-color: var(--border-accent);
+    background: rgba(167, 139, 250, 0.03);
+}
+
+.pic-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.pic-value {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* === Gate Weight Ring Cards === */
+.report-gate-weights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+    animation: fadeInUp 0.5s var(--ease-out) 0.3s both;
+}
+
+.gate-weight-card {
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 20px 14px 16px;
+    transition: border-color 0.3s ease, transform 0.3s var(--ease-out), box-shadow 0.3s ease;
+}
+
+.gate-weight-card:hover {
+    border-color: var(--gw-color, var(--border-accent));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.gw-ring {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.gw-ring-inner {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.gw-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.gw-sub {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* === Enhanced Animations for Results === */
+.domain-contributions {
+    animation: fadeInUp 0.5s var(--ease-out) 0.2s both;
+}
+
+.trimester-risk-card {
+    animation: fadeInUp 0.5s var(--ease-out) 0.4s both;
+}
+
+.result-actions {
+    animation: fadeInUp 0.5s var(--ease-out) 0.5s both;
+}
+
+.disclaimer-box {
+    animation: fadeInUp 0.5s var(--ease-out) 0.6s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Responsive for new elements === */
+@media (max-width: 768px) {
+    .patient-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .report-gate-weights {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    .gw-ring {
+        width: 56px;
+        height: 56px;
+    }
+    .gw-ring-inner {
+        width: 40px;
+        height: 40px;
+        font-size: 0.72rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .patient-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   @MEDIA PRINT — Fallback for Ctrl+P / direct window.print()
+   ============================================================ */
+@media print {
+    /* Hide everything except screening results */
+    body {
+        background: #fff !important;
+        color: #1a1a2e !important;
+    }
+
+    #splash-screen,
+    #cursor-glow,
+    #particles-canvas,
+    .floating-orbs,
+    .light-streaks,
+    .scroll-indicator,
+    #main-nav,
+    #mobile-menu,
+    #popup-modal,
+    #toast-container,
+    .hero,
+    .about-section,
+    .architecture-section,
+    .results-section,
+    .team-section,
+    .footer,
+    .form-progress,
+    .result-actions,
+    .btn-next,
+    .btn-prev,
+    .btn-magnetic,
+    .protection-toast,
+    .tilt-shine {
+        display: none !important;
+    }
+
+    /* Show screening section */
+    .screening-section {
+        display: block !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    .screening-section .section-header {
+        display: block !important;
+    }
+
+    .screening-section .section-header .section-tag {
+        color: #a78bfa !important;
+    }
+
+    .screening-section .section-header .section-title {
+        color: #1a1a2e !important;
+    }
+
+    .screening-section .section-header .gradient-text {
+        background: none !important;
+        -webkit-text-fill-color: #a78bfa !important;
+        color: #a78bfa !important;
+    }
+
+    .screening-wrapper {
+        background: #fff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    /* Steps — only show results */
+    #step-1, #step-2, #step-3 {
+        display: none !important;
+    }
+
+    #step-4 {
+        display: block !important;
+    }
+
+    .results-container {
+        background: #fff !important;
+    }
+
+    /* Fix text colors */
+    .results-container,
+    .results-container * {
+        color: #1a1a2e !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .risk-level {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .risk-low {
+        background: #e6f9f1 !important;
+        color: #059669 !important;
+        border-color: #10b981 !important;
+    }
+    .risk-moderate {
+        background: #fef9e7 !important;
+        color: #d97706 !important;
+        border-color: #f59e0b !important;
+    }
+    .risk-high {
+        background: #fdeaea !important;
+        color: #dc2626 !important;
+        border-color: #ef4444 !important;
+    }
+
+    .domain-contrib-item {
+        background: #f9f9fb !important;
+        border-color: #e5e7eb !important;
+    }
+
+    .domain-contrib-bar-wrap {
+        background: #e5e7eb !important;
+    }
+
+    .domain-contrib-bar {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .trimester-risk-card {
+        background: #f9f9fb !important;
+        border-color: #e5e7eb !important;
+    }
+
+    .report-patient-summary {
+        background: #f9f9fb !important;
+        border-color: #e5e7eb !important;
+    }
+
+    .patient-info-chip {
+        background: #fff !important;
+        border-color: #e5e7eb !important;
+    }
+
+    .gate-weight-card {
+        background: #f9f9fb !important;
+        border-color: #e5e7eb !important;
+    }
+
+    .gw-ring {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .gw-ring-inner {
+        background: #fff !important;
+    }
+
+    .disclaimer-box {
+        background: #fffbeb !important;
+        border-color: #fcd34d !important;
+        color: #92400e !important;
+    }
+
+    .pic-label {
+        color: #6b6b80 !important;
+    }
+
+    .pic-value {
+        color: #1a1a2e !important;
+    }
+
+    .gw-label {
+        color: #4a4a5a !important;
+    }
+
+    .gw-sub {
+        color: #9b9bb0 !important;
+    }
+
+    .domain-contrib-label,
+    .domain-contrib-pct {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    @page {
+        size: A4;
+        margin: 15mm 12mm;
+    }
+}
