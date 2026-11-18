@@ -500,14 +500,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ============================================================
-    // CINEMATIC: Parallax Scroll on Orbs
+    // CINEMATIC: Parallax Scroll on Orbs + Section Fade
     // ============================================================
+    let lastScrollY = 0;
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
+        const delta = scrollY - lastScrollY;
+        lastScrollY = scrollY;
+
         document.querySelectorAll('.orb').forEach((orb, i) => {
             const speed = 0.02 + (i * 0.01);
             orb.style.transform = `translateY(${scrollY * speed}px)`;
         });
+
+        // Parallax hero content
+        const hero = document.querySelector('.hero-content');
+        if (hero && scrollY < window.innerHeight) {
+            hero.style.transform = `translateY(${scrollY * 0.15}px)`;
+            hero.style.opacity = 1 - (scrollY / (window.innerHeight * 0.8));
+        }
     });
 
     // ============================================================
@@ -599,9 +610,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
             if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
+            // Mouse interaction — particles gently attracted to cursor
+            const dx2 = mouseX - p.x;
+            const dy2 = mouseY - p.y;
+            const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+            if (dist2 < 200 && dist2 > 10) {
+                p.vx += (dx2 / dist2) * 0.008;
+                p.vy += (dy2 / dist2) * 0.008;
+                // Dampen
+                p.vx *= 0.998;
+                p.vy *= 0.998;
+            }
+
+            // Glow effect near cursor
+            const glowFactor = dist2 < 150 ? (1 - dist2 / 150) * 0.6 : 0;
+
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(167, 139, 250, ${p.alpha})`;
+            ctx.arc(p.x, p.y, p.r + glowFactor * 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(167, 139, 250, ${p.alpha + glowFactor})`;
             ctx.fill();
 
             // Draw connections
@@ -613,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.beginPath();
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(167, 139, 250, ${0.06 * (1 - dist / 150)})`;
+                    ctx.strokeStyle = `rgba(167, 139, 250, ${0.08 * (1 - dist / 150)})`;
                     ctx.lineWidth = 0.5;
                     ctx.stroke();
                 }
