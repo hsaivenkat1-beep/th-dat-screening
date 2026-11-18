@@ -1088,6 +1088,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const riskColor = result.riskScore <= 30 ? '#10b981' : result.riskScore <= 60 ? '#f59e0b' : '#ef4444';
         const trimesterFactors = TRIMESTER_RISK_FACTORS[result.trimester];
 
+        // Collect readable labels for the report
+        const patientName = formData.patient_name || 'Not Provided';
+        const ageVal = formData.age;
+        const eduLabels = ['No formal education', 'Primary (1–5 yrs)', 'Secondary (6–10 yrs)', 'Higher secondary (11–12 yrs)', 'Graduate / Post-graduate'];
+        const femEduLabel = eduLabels[parseInt(formData.female_education)] || '—';
+        const husEduLabel = eduLabels[parseInt(formData.husband_education)] || '—';
+        const workLabel = formData.working_status === '1' ? 'Employed' : 'Unemployed / Homemaker';
+        const moneyLabels = ['Always insufficient', 'Sometimes insufficient', 'Mostly sufficient', 'Always sufficient'];
+        const moneyLabel = moneyLabels[parseInt(formData.sufficient_money)] || '—';
+        const familyLabel = formData.family_system === '1' ? 'Nuclear' : 'Joint / Extended';
+        const trimesterLabel = result.trimester === 'T1' ? 'First (≤13 wks)' : result.trimester === 'T2' ? 'Second (14–26 wks)' : 'Third (≥27 wks)';
+        const healthLabels = ['Very poor', 'Poor', 'Fair', 'Good', 'Excellent'];
+        const physLabel = healthLabels[parseInt(formData.physical_health)] || '—';
+        const appearLabels = ['Very dissatisfied', 'Dissatisfied', 'Neutral', 'Satisfied', 'Very satisfied'];
+        const appearLabel = appearLabels[parseInt(formData.appearance_acceptance)] || '—';
+        const milLabels = ['Very difficult / Hostile', 'Strained', 'Neutral', 'Good', 'Excellent / Very supportive'];
+        const milLabel = milLabels[parseInt(formData.mil_relationship)] || '—';
+        const miscarriageLabel = formData.miscarriage === '1' ? 'Yes' : 'No';
+        const genderPrefLabels = ['No preference', 'Mild preference', 'Strong preference (boy)'];
+        const genderPrefLabel = genderPrefLabels[parseInt(formData.gender_preference)] || '—';
+        const reportId = 'THDAT-' + Date.now().toString(36).toUpperCase();
+        const reportDate = new Date().toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'short' });
+
         // Render results
         const container = document.getElementById('results-container');
         container.innerHTML = `
@@ -1103,6 +1126,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p style="color: var(--text-secondary); font-size: 0.95rem; max-width: 500px; margin: 0 auto;">${riskAdvice}</p>
             </div>
 
+            <div class="report-patient-summary">
+                <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-violet)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Patient Summary</h4>
+                <div class="patient-summary-grid">
+                    <div class="patient-info-chip"><span class="pic-label">Name</span><span class="pic-value">${patientName}</span></div>
+                    <div class="patient-info-chip"><span class="pic-label">Age</span><span class="pic-value">${ageVal} years</span></div>
+                    <div class="patient-info-chip"><span class="pic-label">Trimester</span><span class="pic-value">${trimesterLabel}</span></div>
+                    <div class="patient-info-chip"><span class="pic-label">Gestational Age</span><span class="pic-value">${result.gestationalWeeks} weeks</span></div>
+                    <div class="patient-info-chip"><span class="pic-label">Report ID</span><span class="pic-value" style="font-family:var(--font-display);font-size:0.8rem;">${reportId}</span></div>
+                    <div class="patient-info-chip"><span class="pic-label">Date</span><span class="pic-value" style="font-size:0.8rem;">${reportDate}</span></div>
+                </div>
+            </div>
+
             <div class="domain-contributions">
                 <h4 style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-violet)" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
@@ -1111,23 +1146,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="domain-contrib-item">
                     <span class="domain-contrib-label" style="color: #818cf8;">Demographic</span>
                     <div class="domain-contrib-bar-wrap">
-                        <div class="domain-contrib-bar" style="width: 0%; background: #818cf8;" data-width="${result.domainContributions.demographic}%"></div>
+                        <div class="domain-contrib-bar" style="width: 0%; background: linear-gradient(90deg, #818cf8, #a78bfa);" data-width="${result.domainContributions.demographic}%"></div>
                     </div>
                     <span class="domain-contrib-pct" style="color: #818cf8;">${result.domainContributions.demographic}%</span>
                 </div>
                 <div class="domain-contrib-item">
                     <span class="domain-contrib-label" style="color: #f97316;">Obstetric</span>
                     <div class="domain-contrib-bar-wrap">
-                        <div class="domain-contrib-bar" style="width: 0%; background: #f97316;" data-width="${result.domainContributions.obstetric}%"></div>
+                        <div class="domain-contrib-bar" style="width: 0%; background: linear-gradient(90deg, #f97316, #fb923c);" data-width="${result.domainContributions.obstetric}%"></div>
                     </div>
                     <span class="domain-contrib-pct" style="color: #f97316;">${result.domainContributions.obstetric}%</span>
                 </div>
                 <div class="domain-contrib-item">
                     <span class="domain-contrib-label" style="color: #10b981;">Psychosocial</span>
                     <div class="domain-contrib-bar-wrap">
-                        <div class="domain-contrib-bar" style="width: 0%; background: #10b981;" data-width="${result.domainContributions.psychosocial}%"></div>
+                        <div class="domain-contrib-bar" style="width: 0%; background: linear-gradient(90deg, #10b981, #34d399);" data-width="${result.domainContributions.psychosocial}%"></div>
                     </div>
                     <span class="domain-contrib-pct" style="color: #10b981;">${result.domainContributions.psychosocial}%</span>
+                </div>
+            </div>
+
+            <div class="report-gate-weights">
+                <div class="gate-weight-card" style="--gw-color: #818cf8;">
+                    <div class="gw-ring" style="background: conic-gradient(#818cf8 0% ${result.gateWeights.demographic}%, rgba(255,255,255,0.06) ${result.gateWeights.demographic}% 100%);"><div class="gw-ring-inner">${result.gateWeights.demographic}%</div></div>
+                    <span class="gw-label">Demographic Gate</span>
+                    <span class="gw-sub">Score: ${result.domainScores.demographic}/100</span>
+                </div>
+                <div class="gate-weight-card" style="--gw-color: #f97316;">
+                    <div class="gw-ring" style="background: conic-gradient(#f97316 0% ${result.gateWeights.obstetric}%, rgba(255,255,255,0.06) ${result.gateWeights.obstetric}% 100%);"><div class="gw-ring-inner">${result.gateWeights.obstetric}%</div></div>
+                    <span class="gw-label">Obstetric Gate</span>
+                    <span class="gw-sub">Score: ${result.domainScores.obstetric}/100</span>
+                </div>
+                <div class="gate-weight-card" style="--gw-color: #10b981;">
+                    <div class="gw-ring" style="background: conic-gradient(#10b981 0% ${result.gateWeights.psychosocial}%, rgba(255,255,255,0.06) ${result.gateWeights.psychosocial}% 100%);"><div class="gw-ring-inner">${result.gateWeights.psychosocial}%</div></div>
+                    <span class="gw-label">Psychosocial Gate</span>
+                    <span class="gw-sub">Score: ${result.domainScores.psychosocial}/100</span>
                 </div>
             </div>
 
@@ -1144,21 +1197,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         </li>
                     `).join('')}
                 </ul>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px;">
-                <div style="text-align: center; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px;">
-                    <span style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: #818cf8; display: block;">${result.gateWeights.demographic}%</span>
-                    <span style="font-size: 0.75rem; color: var(--text-muted);">Demo Gate</span>
-                </div>
-                <div style="text-align: center; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px;">
-                    <span style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: #f97316; display: block;">${result.gateWeights.obstetric}%</span>
-                    <span style="font-size: 0.75rem; color: var(--text-muted);">Obst Gate</span>
-                </div>
-                <div style="text-align: center; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px;">
-                    <span style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: #10b981; display: block;">${result.gateWeights.psychosocial}%</span>
-                    <span style="font-size: 0.75rem; color: var(--text-muted);">Psych Gate</span>
-                </div>
             </div>
 
             <div class="result-actions">
@@ -1199,9 +1237,13 @@ document.addEventListener('DOMContentLoaded', () => {
             goToStep(1);
         });
 
-        // Print button
+        // Print button — generates standalone clinical report
         document.getElementById('print-results-btn').addEventListener('click', () => {
-            window.print();
+            generatePrintReport(result, riskLevel, riskClass, riskColor, riskAdvice, formData, {
+                patientName, ageVal, femEduLabel, husEduLabel, workLabel, moneyLabel, familyLabel,
+                trimesterLabel, physLabel, appearLabel, milLabel, miscarriageLabel, genderPrefLabel,
+                reportId, reportDate, trimesterFactors
+            });
         });
     }
 
@@ -1515,6 +1557,260 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gateSection = document.querySelector('.gate-weights-section');
     if (gateSection) gateObserver.observe(gateSection);
+
+    // ============================================================
+    // Print Report Generator — Premium Clinical Document
+    // ============================================================
+    function generatePrintReport(result, riskLevel, riskClass, riskColor, riskAdvice, formData, labels) {
+        const scoreArc = (result.riskScore / 100) * 283; // SVG circle circumference ≈ 2πr where r=45
+        const riskBg = result.riskScore <= 30 ? '#e6f9f1' : result.riskScore <= 60 ? '#fef9e7' : '#fdeaea';
+        const riskBorder = result.riskScore <= 30 ? '#10b981' : result.riskScore <= 60 ? '#f59e0b' : '#ef4444';
+
+        const printDoc = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TH-DAT Screening Report — ${labels.patientName}</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;color:#1a1a2e;line-height:1.6;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.report{max-width:800px;margin:0 auto;padding:40px 48px;}
+
+/* === HEADER === */
+.report-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:3px solid #a78bfa;margin-bottom:28px;}
+.header-left{display:flex;align-items:center;gap:14px;}
+.header-logo{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#ec4899);display:flex;align-items:center;justify-content:center;}
+.header-logo svg{width:28px;height:28px;}
+.header-title{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.2;}
+.header-subtitle{font-size:0.75rem;color:#6b6b80;letter-spacing:0.05em;text-transform:uppercase;margin-top:2px;}
+.header-right{text-align:right;font-size:0.78rem;color:#6b6b80;line-height:1.9;}
+.header-right strong{color:#1a1a2e;font-weight:600;}
+
+/* === SECTION TITLES === */
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:#1a1a2e;padding:8px 0 6px;border-bottom:2px solid #e5e7eb;margin:24px 0 14px;display:flex;align-items:center;gap:8px;}
+.section-title .st-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;}
+
+/* === RISK ASSESSMENT === */
+.risk-banner{display:flex;align-items:center;gap:28px;padding:22px 28px;border-radius:14px;background:${riskBg};border:2px solid ${riskBorder};margin-bottom:20px;}
+.risk-score-visual{position:relative;width:110px;height:110px;flex-shrink:0;}
+.risk-score-visual svg{width:110px;height:110px;transform:rotate(-90deg);}
+.risk-score-visual .bg-ring{fill:none;stroke:#e5e7eb;stroke-width:7;}
+.risk-score-visual .fg-ring{fill:none;stroke:${riskColor};stroke-width:7;stroke-linecap:round;stroke-dasharray:283;stroke-dashoffset:${283 - scoreArc};transition:stroke-dashoffset 1s;}
+.score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.score-num .big{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:800;color:${riskColor};line-height:1;}
+.score-num .small{font-size:0.6rem;color:#6b6b80;text-transform:uppercase;letter-spacing:0.08em;}
+.risk-info h3{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:${riskColor};margin-bottom:4px;}
+.risk-info p{font-size:0.85rem;color:#4a4a5a;line-height:1.6;}
+
+/* === PATIENT TABLE === */
+.info-table{width:100%;border-collapse:collapse;margin-bottom:4px;}
+.info-table td{padding:7px 12px;font-size:0.82rem;border:1px solid #e5e7eb;}
+.info-table td:first-child{background:#f8f8fc;font-weight:600;color:#4a4a5a;width:38%;white-space:nowrap;}
+.info-table td:nth-child(2){color:#1a1a2e;}
+
+/* === DOMAIN BARS === */
+.domain-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #f0f0f5;}
+.domain-row:last-child{border-bottom:none;}
+.domain-label{width:120px;font-weight:600;font-size:0.82rem;}
+.domain-bar-track{flex:1;height:14px;background:#f0f0f5;border-radius:8px;overflow:hidden;position:relative;}
+.domain-bar-fill{height:100%;border-radius:8px;}
+.domain-pct{width:48px;text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.88rem;}
+
+/* === GATE WEIGHTS === */
+.gate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
+.gate-card{text-align:center;padding:16px 10px;border-radius:12px;border:1px solid #e5e7eb;background:#fafafe;}
+.gate-card .gc-val{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;line-height:1;}
+.gate-card .gc-label{display:block;font-size:0.72rem;color:#6b6b80;margin-top:4px;text-transform:uppercase;letter-spacing:0.04em;}
+.gate-card .gc-score{display:block;font-size:0.75rem;color:#9b9bb0;margin-top:2px;}
+
+/* === TRIMESTER FACTORS === */
+.factor-list{list-style:none;margin:0;padding:0;}
+.factor-list li{padding:7px 0;font-size:0.82rem;color:#4a4a5a;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid #f0f0f5;}
+.factor-list li:last-child{border-bottom:none;}
+.factor-icon{font-size:0.85rem;line-height:1.4;}
+
+/* === RECOMMENDATIONS === */
+.rec-box{padding:14px 18px;border-radius:10px;background:#f0eeff;border-left:4px solid #a78bfa;margin-top:10px;}
+.rec-box p{font-size:0.82rem;color:#3a3a5a;line-height:1.7;}
+.rec-box ul{margin:8px 0 0 18px;font-size:0.82rem;color:#3a3a5a;line-height:1.9;}
+
+/* === FOOTER === */
+.report-footer{margin-top:32px;padding-top:16px;border-top:2px solid #e5e7eb;}
+.disclaimer-print{padding:12px 16px;border-radius:8px;background:#fffbeb;border:1px solid #fcd34d;font-size:0.72rem;color:#92400e;line-height:1.7;margin-bottom:12px;}
+.footer-row{display:flex;justify-content:space-between;align-items:center;font-size:0.68rem;color:#9b9bb0;padding-top:8px;}
+.footer-row .copyright{font-weight:500;}
+
+/* === PRINT TWEAKS === */
+@media print{
+    body{background:#fff !important;}
+    .report{padding:20px 24px;}
+    .risk-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .domain-bar-fill{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .gate-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    @page{size:A4;margin:12mm 10mm;}
+}
+</style>
+</head>
+<body>
+<div class="report">
+
+    <!-- HEADER -->
+    <div class="report-header">
+        <div class="header-left">
+            <div class="header-logo">
+                <svg viewBox="0 0 32 32" fill="none"><path d="M10 16 C10 12, 16 8, 16 16 C16 8, 22 12, 22 16 C22 22, 16 26, 16 26 C16 26, 10 22, 10 16Z" fill="white" opacity="0.95"/></svg>
+            </div>
+            <div>
+                <div class="header-title">TH-DAT Screening Report</div>
+                <div class="header-subtitle">Trimester-Aware Antenatal Depression Assessment</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <strong>Report ID:</strong> ${labels.reportId}<br>
+            <strong>Generated:</strong> ${labels.reportDate}<br>
+            <strong>Institution:</strong> VIT-AP University
+        </div>
+    </div>
+
+    <!-- RISK ASSESSMENT -->
+    <div class="section-title"><span class="st-icon">🎯</span> Risk Assessment</div>
+    <div class="risk-banner">
+        <div class="risk-score-visual">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" class="bg-ring"/>
+                <circle cx="50" cy="50" r="45" class="fg-ring"/>
+            </svg>
+            <div class="score-num">
+                <div class="big">${result.riskScore}</div>
+                <div class="small">Risk Score</div>
+            </div>
+        </div>
+        <div class="risk-info">
+            <h3>${riskLevel}</h3>
+            <p>${riskAdvice}</p>
+        </div>
+    </div>
+
+    <!-- PATIENT INFO -->
+    <div class="section-title"><span class="st-icon">👤</span> Patient Information</div>
+    <table class="info-table">
+        <tr><td>Patient Name</td><td>${labels.patientName}</td></tr>
+        <tr><td>Age</td><td>${labels.ageVal} years</td></tr>
+        <tr><td>Gestational Age</td><td>${result.gestationalWeeks} weeks (${labels.trimesterLabel})</td></tr>
+        <tr><td>Education (Patient)</td><td>${labels.femEduLabel}</td></tr>
+        <tr><td>Education (Spouse)</td><td>${labels.husEduLabel}</td></tr>
+        <tr><td>Employment</td><td>${labels.workLabel}</td></tr>
+        <tr><td>Financial Status</td><td>${labels.moneyLabel}</td></tr>
+        <tr><td>Family Type</td><td>${labels.familyLabel}</td></tr>
+        <tr><td>Gravida</td><td>${formData.gravida} (Sons: ${formData.num_sons}, Daughters: ${formData.num_daughters})</td></tr>
+        <tr><td>Miscarriage History</td><td>${labels.miscarriageLabel}</td></tr>
+        <tr><td>Gender Preference</td><td>${labels.genderPrefLabel}</td></tr>
+        <tr><td>Physical Health</td><td>${labels.physLabel}</td></tr>
+        <tr><td>Appearance Acceptance</td><td>${labels.appearLabel}</td></tr>
+        <tr><td>Mother-in-Law Relationship</td><td>${labels.milLabel}</td></tr>
+    </table>
+
+    <!-- DOMAIN ANALYSIS -->
+    <div class="section-title"><span class="st-icon">📊</span> Domain Contribution Analysis</div>
+    <div class="domain-row">
+        <span class="domain-label" style="color:#6366f1;">Demographic</span>
+        <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${result.domainContributions.demographic}%;background:linear-gradient(90deg,#818cf8,#a78bfa);"></div></div>
+        <span class="domain-pct" style="color:#6366f1;">${result.domainContributions.demographic}%</span>
+    </div>
+    <div class="domain-row">
+        <span class="domain-label" style="color:#ea580c;">Obstetric</span>
+        <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${result.domainContributions.obstetric}%;background:linear-gradient(90deg,#f97316,#fb923c);"></div></div>
+        <span class="domain-pct" style="color:#ea580c;">${result.domainContributions.obstetric}%</span>
+    </div>
+    <div class="domain-row">
+        <span class="domain-label" style="color:#059669;">Psychosocial</span>
+        <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${result.domainContributions.psychosocial}%;background:linear-gradient(90deg,#10b981,#34d399);"></div></div>
+        <span class="domain-pct" style="color:#059669;">${result.domainContributions.psychosocial}%</span>
+    </div>
+
+    <!-- GATE WEIGHTS -->
+    <div class="section-title"><span class="st-icon">⚙️</span> Domain Gate Weights (${result.trimester} Modulated)</div>
+    <div class="gate-grid">
+        <div class="gate-card">
+            <div class="gc-val" style="color:#6366f1;">${result.gateWeights.demographic}%</div>
+            <span class="gc-label">Demographic</span>
+            <span class="gc-score">Domain Score: ${result.domainScores.demographic}/100</span>
+        </div>
+        <div class="gate-card">
+            <div class="gc-val" style="color:#ea580c;">${result.gateWeights.obstetric}%</div>
+            <span class="gc-label">Obstetric</span>
+            <span class="gc-score">Domain Score: ${result.domainScores.obstetric}/100</span>
+        </div>
+        <div class="gate-card">
+            <div class="gc-val" style="color:#059669;">${result.gateWeights.psychosocial}%</div>
+            <span class="gc-label">Psychosocial</span>
+            <span class="gc-score">Domain Score: ${result.domainScores.psychosocial}/100</span>
+        </div>
+    </div>
+
+    <!-- TRIMESTER FACTORS -->
+    <div class="section-title"><span class="st-icon">🗓️</span> ${result.trimester === 'T1' ? 'First' : result.trimester === 'T2' ? 'Second' : 'Third'} Trimester Risk Factors</div>
+    <ul class="factor-list">
+        ${labels.trimesterFactors.map(f => `<li><span class="factor-icon">${f.icon}</span><span>${f.text}</span></li>`).join('')}
+    </ul>
+
+    <!-- RECOMMENDATIONS -->
+    <div class="section-title"><span class="st-icon">💡</span> Clinical Recommendations</div>
+    <div class="rec-box">
+        ${result.riskScore <= 30 ? `
+        <p><strong>Low Risk — Routine Monitoring:</strong></p>
+        <ul>
+            <li>Continue standard antenatal care schedule</li>
+            <li>Encourage open communication about emotional wellbeing</li>
+            <li>Re-screen at each trimester transition</li>
+            <li>Provide psychoeducation on antenatal mood changes</li>
+        </ul>
+        ` : result.riskScore <= 60 ? `
+        <p><strong>Moderate Risk — Enhanced Monitoring:</strong></p>
+        <ul>
+            <li>Administer validated screening instrument (EPDS or PHQ-9) for clinical confirmation</li>
+            <li>Schedule follow-up assessment within 2–4 weeks</li>
+            <li>Assess social support system and strengthen where possible</li>
+            <li>Consider referral to psychosocial counseling services</li>
+            <li>Monitor for symptom progression at each visit</li>
+        </ul>
+        ` : `
+        <p><strong>High Risk — Urgent Referral Recommended:</strong></p>
+        <ul>
+            <li>Immediate clinical assessment with validated instrument (EPDS/PHQ-9)</li>
+            <li>Priority referral to mental health specialist or perinatal psychiatrist</li>
+            <li>Assess for suicidal ideation and safety planning</li>
+            <li>Consider integrated care approach (obstetric + psychiatric)</li>
+            <li>Increase prenatal visit frequency for close monitoring</li>
+            <li>Involve support network (family, community health workers)</li>
+        </ul>
+        `}
+    </div>
+
+    <!-- FOOTER -->
+    <div class="report-footer">
+        <div class="disclaimer-print">
+            ⚠️ <strong>Important Disclaimer:</strong> This screening report is generated by TH-DAT (Trimester-Aware Hierarchical Domain-Attention Transformer), a demonstration tool for research purposes only. It does NOT constitute a clinical diagnosis and should NEVER replace professional medical assessment with validated instruments (EPDS/PHQ-9). The risk scores use a simplified simulation of the TH-DAT architecture, not actual trained model weights. All clinical decisions must be made by qualified healthcare professionals.
+        </div>
+        <div class="footer-row">
+            <span class="copyright">© ${new Date().getFullYear()} Saivenkat H — VIT-AP University. All Rights Reserved.</span>
+            <span>Report ID: ${labels.reportId} | Generated: ${labels.reportDate}</span>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>`;
+
+        const printWin = window.open('', '_blank', 'width=900,height=1100');
+        printWin.document.write(printDoc);
+        printWin.document.close();
+        setTimeout(() => {
+            printWin.focus();
+            printWin.print();
+        }, 600);
+    }
 
     // ============================================================
     // Smooth scroll for all anchor links
