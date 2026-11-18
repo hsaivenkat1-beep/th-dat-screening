@@ -2530,6 +2530,470 @@ img { max-width: 100%; }
 
 
 /* ============================================================
+   ✨ PREMIUM VISUAL EFFECTS — Glassmorphism, Glows, Animations
+   ============================================================ */
+
+/* === Animated Gradient Section Dividers === */
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(167,139,250,0.3), rgba(236,72,153,0.3), transparent);
+    animation: divider-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes divider-shimmer {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* === Glassmorphism Card Enhancement === */
+.challenge-card,
+.arch-card,
+.phase-card,
+.tri-card,
+.cohort-card {
+    background: rgba(255, 255, 255, 0.025) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    transition: all 0.4s var(--ease-out) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* === Animated Gradient Border on Hover === */
+.challenge-card::before,
+.arch-card::before,
+.tri-card::before,
+.cohort-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(167,139,250,0.4), rgba(236,72,153,0.4), rgba(249,115,22,0.4), rgba(167,139,250,0.4));
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    animation: gradient-rotate 3s ease infinite;
+}
+
+.challenge-card:hover::before,
+.arch-card:hover::before,
+.tri-card:hover::before,
+.cohort-card:hover::before {
+    opacity: 1;
+}
+
+@keyframes gradient-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === Enhanced Card Hover Glow === */
+.challenge-card:hover,
+.arch-card:hover,
+.tri-card:hover,
+.cohort-card:hover {
+    border-color: rgba(167, 139, 250, 0.2) !important;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(167, 139, 250, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    transform: translateY(-6px) !important;
+}
+
+/* === Section Tag Animated Glow === */
+.section-tag {
+    position: relative;
+    overflow: hidden;
+    animation: tag-glow-pulse 3s ease-in-out infinite;
+}
+
+.section-tag::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(167,139,250,0.2), transparent);
+    animation: tag-sweep 3s ease-in-out infinite;
+}
+
+@keyframes tag-sweep {
+    0% { left: -100%; }
+    50%, 100% { left: 150%; }
+}
+
+@keyframes tag-glow-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(167,139,250,0.1); }
+    50% { box-shadow: 0 0 20px rgba(167,139,250,0.2), 0 0 40px rgba(167,139,250,0.05); }
+}
+
+/* === Enhanced Gradient Text with Animation === */
+.gradient-text {
+    background-size: 200% auto !important;
+    animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+/* === Hero Section Enhancements === */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, var(--bg-primary), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hero-badge {
+    animation: badge-float 3s ease-in-out infinite;
+}
+
+@keyframes badge-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.hero-title .title-line {
+    display: block;
+    animation: title-reveal 0.8s var(--ease-out) both;
+}
+
+.hero-title .title-line:nth-child(1) { animation-delay: 0.2s; }
+.hero-title .title-line:nth-child(2) { animation-delay: 0.4s; }
+.hero-title .title-line:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes title-reveal {
+    from { opacity: 0; transform: translateY(30px) skewY(2deg); filter: blur(4px); }
+    to { opacity: 1; transform: translateY(0) skewY(0); filter: blur(0); }
+}
+
+/* === Enhanced Button Effects === */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: -1;
+}
+
+.btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:active {
+    transform: scale(0.96) !important;
+}
+
+/* === Neon Glow on Logo === */
+.nav-logo .logo-icon {
+    transition: filter 0.3s ease;
+}
+
+.nav-logo:hover .logo-icon {
+    filter: drop-shadow(0 0 12px rgba(167,139,250,0.6)) drop-shadow(0 0 24px rgba(236,72,153,0.3));
+}
+
+/* === Stat Counter Glow === */
+.stat-value {
+    text-shadow: 0 0 20px rgba(167,139,250,0.3);
+    transition: text-shadow 0.3s ease;
+}
+
+.stat-item:hover .stat-value {
+    text-shadow: 0 0 30px rgba(167,139,250,0.6), 0 0 60px rgba(167,139,250,0.2);
+}
+
+/* === Enhanced Nav Glassmorphism === */
+.nav.scrolled {
+    background: rgba(10, 10, 15, 0.7) !important;
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.08) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), 0 0 40px rgba(167,139,250,0.03) !important;
+}
+
+/* === Nav Link Hover Effect === */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    transition: width 0.3s var(--ease-out), left 0.3s var(--ease-out);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
+/* === Screening Form Glassmorphism === */
+.screening-wrapper {
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+
+/* === Input Focus Glow === */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-violet) !important;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15), 0 0 20px rgba(167, 139, 250, 0.08) !important;
+    outline: none;
+}
+
+/* === Progress Step Animation === */
+.progress-step.active .step-circle {
+    animation: step-pulse 2s ease-in-out infinite;
+}
+
+@keyframes step-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(167, 139, 250, 0); }
+}
+
+/* === Timeline Marker Glow === */
+.timeline-marker {
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+    box-shadow: 0 0 20px rgba(var(--color), 0.4);
+    transform: scale(1.15);
+}
+
+/* === Architecture Connector Enhanced === */
+.arch-connector svg {
+    filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.3));
+}
+
+/* === Team Card Creator Special Effect === */
+.creator-card {
+    position: relative;
+}
+
+.creator-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, #a78bfa, #ec4899, #f97316, #a78bfa);
+    background-size: 400% 400%;
+    animation: creator-border-spin 4s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+@keyframes creator-border-spin {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === Creator Avatar Animated Ring === */
+.creator-avatar {
+    position: relative;
+}
+
+.creator-card .team-avatar::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(#a78bfa, #ec4899, #f97316, #10b981, #a78bfa);
+    animation: avatar-spin 3s linear infinite;
+    z-index: -1;
+}
+
+@keyframes avatar-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* === Performance Table Row Hover === */
+.perf-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.perf-table tbody tr:hover {
+    background: rgba(167, 139, 250, 0.05) !important;
+    box-shadow: inset 3px 0 0 var(--accent-violet);
+}
+
+.highlight-row {
+    position: relative;
+}
+
+.highlight-row td:first-child::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gradient-primary);
+    border-radius: 0 2px 2px 0;
+}
+
+/* === Loss Function Card Glow === */
+.loss-function-card {
+    position: relative;
+}
+
+.loss-function-card .formula {
+    position: relative;
+    overflow: hidden;
+}
+
+.loss-function-card .formula::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(167,139,250,0.08), transparent);
+    animation: formula-shine 5s ease-in-out infinite;
+}
+
+@keyframes formula-shine {
+    0% { left: -150%; }
+    50%, 100% { left: 150%; }
+}
+
+/* === Footer Enhanced === */
+.footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(167,139,250,0.4), rgba(236,72,153,0.3), transparent);
+}
+
+/* === Scroll Indicator Enhanced === */
+.scroll-indicator {
+    animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(10px); opacity: 0.5; }
+}
+
+/* === Risk Score Value Glow on Results === */
+.risk-score-value {
+    text-shadow: 0 0 30px currentColor;
+}
+
+/* === Domain Bar Animated Fill Shimmer === */
+.domain-contrib-bar {
+    position: relative;
+    overflow: hidden;
+}
+
+.domain-contrib-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    animation: bar-shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes bar-shimmer {
+    0% { left: -100%; }
+    60%, 100% { left: 150%; }
+}
+
+/* === Enhanced Orb Interactions === */
+.orb-1 { animation-duration: 20s; opacity: 0.18; }
+.orb-2 { animation-duration: 25s; opacity: 0.14; }
+.orb-3 { animation-duration: 18s; opacity: 0.12; }
+
+/* === Pulse Dot on Badge === */
+.badge-dot {
+    position: relative;
+}
+
+.badge-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: inherit;
+    transform: translate(-50%, -50%);
+    animation: dot-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes dot-ping {
+    75%, 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+
+
+/* ============================================================
    ENHANCED RESULTS — Patient Summary, Gate Weights, Print
    ============================================================ */
 
@@ -2718,6 +3182,13 @@ img { max-width: 100%; }
         color: #1a1a2e !important;
     }
 
+    /* Disable all animations in print */
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Hide non-essential elements */
     #splash-screen,
     #cursor-glow,
     #particles-canvas,
@@ -2741,6 +3212,23 @@ img { max-width: 100%; }
     .btn-magnetic,
     .protection-toast,
     .tilt-shine {
+        display: none !important;
+    }
+
+    /* Hide gradient pseudo-elements */
+    .section::before,
+    .challenge-card::before,
+    .arch-card::before,
+    .tri-card::before,
+    .cohort-card::before,
+    .creator-card::after,
+    .creator-card .team-avatar::before,
+    .hero::after,
+    .footer::before,
+    .domain-contrib-bar::after,
+    .section-tag::after,
+    .loss-function-card .formula::after,
+    .badge-dot::after {
         display: none !important;
     }
 
